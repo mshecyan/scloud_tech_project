@@ -1,0 +1,19 @@
+{
+    "name": "www/src",
+    "description": "src",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "src\\": "./src"
+        }
+    },
+    "authors": [
+        {
+            "name": "n.mshecyan"
+        }
+    ],
+    "require": {"ext-pdo": "*",
+      "ext-fileinfo": "*"
+    }
+}

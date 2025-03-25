@@ -1,0 +1,39 @@
+services:
+
+ adminer:
+  image: adminer
+  restart: always
+  ports:
+   - 8080:8080
+
+ nginx:
+  image: nginx:latest
+  restart: always
+  ports:
+   - 80:80
+  volumes:
+   - ./docker/nginx/fastcgi_params:/etc/nginx/fastcgi_params
+   - ./docker/nginx/conf:/etc/nginx/conf.d
+   - ./www:/var/www/
+
+ php-fpm:
+  build: ./docker/php/php-fpm
+  restart: always
+  volumes:
+   - ./www:/var/www/
+  depends_on:
+   - postgres
+
+ postgres:
+  container_name: postgresdb
+  image: postgres:16
+  restart: always
+  ports:
+   - 5431:5432
+  volumes:
+   - ./docker/db/dbdata:/var/lib/postgresql/data
+   - ./docker/db/dbdump:/var/local
+  environment:
+   POSTGRES_DB: scloud
+   POSTGRES_USER: postgres
+   POSTGRES_PASSWORD: postgres
